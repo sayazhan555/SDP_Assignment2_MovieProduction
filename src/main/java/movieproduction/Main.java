@@ -15,54 +15,24 @@ public class Main {
 
         int choice = scanner.nextInt();
 
+        VisualCreator visualCreator;
+
         if (choice == 1) {
-            ActionVisual visual = new ActionVisual();
-            ActionSound sound = new ActionSound();
-            ActionEditing editing = new ActionEditing();
-
-            visual.createScene();
-            sound.recordSound();
-            editing.edit();
-
-            int totalTime = visual.getProductionTime()
-                    + sound.getProductionTime()
-                    + editing.getProductionTime();
-
-            System.out.println("Total production time: " + totalTime + " hours");
+            visualCreator = new ActionVisualCreator();
 
         } else if (choice == 2) {
-            DocumentaryVisual visual = new DocumentaryVisual();
-            DocumentarySound sound = new DocumentarySound();
-            DocumentaryEditing editing = new DocumentaryEditing();
-
-            visual.createScene();
-            sound.recordSound();
-            editing.edit();
-
-            int totalTime = visual.getProductionTime()
-                    + sound.getProductionTime()
-                    + editing.getProductionTime();
-
-            System.out.println("Total production time: " + totalTime + " hours");
+            visualCreator = new DocumentaryVisualCreator();
 
         } else if (choice == 3) {
-            AnimationVisual visual = new AnimationVisual();
-            AnimationSound sound = new AnimationSound();
-            AnimationEditing editing = new AnimationEditing();
-
-            visual.createScene();
-            sound.recordSound();
-            editing.edit();
-
-            int totalTime = visual.getProductionTime()
-                    + sound.getProductionTime()
-                    + editing.getProductionTime();
-
-            System.out.println("Total production time: " + totalTime + " hours");
+            visualCreator = new AnimationVisualCreator();
 
         } else {
             System.out.println("Invalid choice");
+            scanner.close();
+            return;
         }
+
+        visualCreator.produceVisualScene();
 
         scanner.close();
     }
