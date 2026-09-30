@@ -10,6 +10,8 @@ public class FactorySelector {
             return new DocumentaryProductionFactory();
         } else if (choice == 3) {
             return new AnimationProductionFactory();
+        } else if (choice == 4) {
+            return new HorrorProductionFactory();
         }
 
         throw new IllegalArgumentException("Unknown production type: " + choice);

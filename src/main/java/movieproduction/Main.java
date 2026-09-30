@@ -12,6 +12,7 @@ public class Main {
         System.out.println("1 - Action");
         System.out.println("2 - Documentary");
         System.out.println("3 - Animation");
+        System.out.println("4 - Horror");
 
         int choice = scanner.nextInt();
 
@@ -33,3 +34,4 @@ public class Main {
         scanner.close();
     }
 }
+
