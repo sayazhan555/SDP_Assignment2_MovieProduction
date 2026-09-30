@@ -15,24 +15,22 @@ public class Main {
 
         int choice = scanner.nextInt();
 
-        VisualCreator visualCreator;
+        MovieProductionFactory factory;
 
         if (choice == 1) {
-            visualCreator = new ActionVisualCreator();
-
+            factory = new ActionProductionFactory();
         } else if (choice == 2) {
-            visualCreator = new DocumentaryVisualCreator();
-
+            factory = new DocumentaryProductionFactory();
         } else if (choice == 3) {
-            visualCreator = new AnimationVisualCreator();
-
+            factory = new AnimationProductionFactory();
         } else {
             System.out.println("Invalid choice");
             scanner.close();
             return;
         }
 
-        visualCreator.produceVisualScene();
+        MovieProduction production = new MovieProduction(factory);
+        production.produceMovie();
 
         scanner.close();
     }
