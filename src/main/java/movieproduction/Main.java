@@ -15,22 +15,18 @@ public class Main {
 
         int choice = scanner.nextInt();
 
-        MovieProductionFactory factory;
+        try {
+            MovieProductionFactory factory =
+                    FactorySelector.selectFactory(choice);
 
-        if (choice == 1) {
-            factory = new ActionProductionFactory();
-        } else if (choice == 2) {
-            factory = new DocumentaryProductionFactory();
-        } else if (choice == 3) {
-            factory = new AnimationProductionFactory();
-        } else {
-            System.out.println("Invalid choice");
-            scanner.close();
-            return;
+            MovieProduction production =
+                    new MovieProduction(factory);
+
+            production.produceMovie();
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
-
-        MovieProduction production = new MovieProduction(factory);
-        production.produceMovie();
 
         scanner.close();
     }
