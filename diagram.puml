@@ -1,5 +1,7 @@
 @startuml
+top to bottom direction
 skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
 
 package "Factory Method" {
 
@@ -28,10 +30,6 @@ package "Factory Method" {
     VisualCreator <|-- ActionVisualCreator
     VisualCreator <|-- DocumentaryVisualCreator
     VisualCreator <|-- AnimationVisualCreator
-
-    ActionVisualCreator ..> ActionVisual : creates
-    DocumentaryVisualCreator ..> DocumentaryVisual : creates
-    AnimationVisualCreator ..> AnimationVisual : creates
 }
 
 package "Abstract Factory" {
@@ -52,6 +50,11 @@ package "Abstract Factory" {
         +createEditing() : Editing
     }
 
+    class ActionProductionFactory
+    class DocumentaryProductionFactory
+    class AnimationProductionFactory
+    class HorrorProductionFactory
+
     class ActionSound
     class DocumentarySound
     class AnimationSound
@@ -64,10 +67,10 @@ package "Abstract Factory" {
 
     class HorrorVisual
 
-    class ActionProductionFactory
-    class DocumentaryProductionFactory
-    class AnimationProductionFactory
-    class HorrorProductionFactory
+    MovieProductionFactory <|.. ActionProductionFactory
+    MovieProductionFactory <|.. DocumentaryProductionFactory
+    MovieProductionFactory <|.. AnimationProductionFactory
+    MovieProductionFactory <|.. HorrorProductionFactory
 
     Sound <|.. ActionSound
     Sound <|.. DocumentarySound
@@ -80,54 +83,30 @@ package "Abstract Factory" {
     Editing <|.. HorrorEditing
 
     Visual <|.. HorrorVisual
+}
 
-    MovieProductionFactory <|.. ActionProductionFactory
-    MovieProductionFactory <|.. DocumentaryProductionFactory
-    MovieProductionFactory <|.. AnimationProductionFactory
-    MovieProductionFactory <|.. HorrorProductionFactory
-
-    ActionProductionFactory ..> ActionVisual : creates
-    ActionProductionFactory ..> ActionSound : creates
-    ActionProductionFactory ..> ActionEditing : creates
-
-    DocumentaryProductionFactory ..> DocumentaryVisual : creates
-    DocumentaryProductionFactory ..> DocumentarySound : creates
-    DocumentaryProductionFactory ..> DocumentaryEditing : creates
-
-    AnimationProductionFactory ..> AnimationVisual : creates
-    AnimationProductionFactory ..> AnimationSound : creates
-    AnimationProductionFactory ..> AnimationEditing : creates
-
-    HorrorProductionFactory ..> HorrorVisual : creates
-    HorrorProductionFactory ..> HorrorSound : creates
-    HorrorProductionFactory ..> HorrorEditing : creates
+class Main
+class FactorySelector {
+    +selectFactory(choice : int) : MovieProductionFactory
 }
 
 class MovieProduction {
     -visual : Visual
     -sound : Sound
     -editing : Editing
-    +MovieProduction(factory : MovieProductionFactory)
     +prepareProduction()
     +produceScene()
     +finalizeProduction()
 }
 
-class FactorySelector {
-    +selectFactory(choice : int) : MovieProductionFactory
-}
+Main --> FactorySelector : uses
+Main --> MovieProduction : creates
 
-class Main {
-    +main(args : String[])
-}
+FactorySelector --> MovieProductionFactory : selects
 
-MovieProduction --> Visual : uses
-MovieProduction --> Sound : uses
-MovieProduction --> Editing : uses
-MovieProduction ..> MovieProductionFactory : receives
-
-FactorySelector ..> MovieProductionFactory : selects
-Main ..> FactorySelector : uses
-Main ..> MovieProduction : creates
+MovieProduction --> MovieProductionFactory : uses
+MovieProduction --> Visual
+MovieProduction --> Sound
+MovieProduction --> Editing
 
 @enduml
