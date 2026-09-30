@@ -22,7 +22,9 @@ public class Main {
             MovieProduction production =
                     new MovieProduction(factory);
 
-            production.produceMovie();
+            production.prepareProduction();
+            production.produceScene();
+            production.finalizeProduction();
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
